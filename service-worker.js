@@ -1,4 +1,4 @@
-const CACHE = 'yibi-static-v3';
+const CACHE = 'yibi-static-v4';
 const CORE = ['./', './manifest.webmanifest', './favicon.svg'];
 
 self.addEventListener('install', event => {
@@ -9,6 +9,13 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).then(response => {
+      if (response.ok) caches.open(CACHE).then(cache => cache.put(event.request, response.clone()));
+      return response;
+    }).catch(() => caches.match(event.request)));
+    return;
+  }
   event.respondWith(caches.match(event.request).then(cached => {
     const update = fetch(event.request).then(response => {
       if (response.ok) caches.open(CACHE).then(cache => cache.put(event.request, response.clone()));
