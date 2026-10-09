@@ -1,13 +1,13 @@
 {
   "id": "./",
-  "name": "一笔 · 个人记账",
-  "short_name": "一笔",
+  "name": "一笔 · 布布一二 温暖记账",
+  "short_name": "布布一二记账",
   "lang": "zh-CN",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f5f8",
-  "theme_color": "#0f6cbd",
+  "background_color": "#fcfaf6",
+  "theme_color": "#8c5836",
   "icons": [
     {
       "src": "icons/icon-192.png",
