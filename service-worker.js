@@ -1,4 +1,4 @@
-const CACHE = 'yibi-static-v15';
+const CACHE = 'yibi-static-v16';
 const CORE = ['./', './manifest.webmanifest', './favicon.svg'];
 
 self.addEventListener('install', event => {
