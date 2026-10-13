@@ -1,5 +1,5 @@
-const CACHE = 'yibi-static-v18';
-const CORE = ['./', './manifest.webmanifest', './favicon.svg'];
+const CACHE = 'yibi-static-v19';
+const CORE = ['./', './manifest.webmanifest', './favicon.png', './favicon.svg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
