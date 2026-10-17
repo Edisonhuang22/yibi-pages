@@ -1,4 +1,4 @@
-const CACHE = 'yibi-static-v24';
+const CACHE = 'yibi-static-v25';
 const CORE = ['./', './index.html', './manifest.webmanifest', './favicon.png', './favicon.svg', './icons/icon-192.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
