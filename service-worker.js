@@ -1,5 +1,5 @@
-const CACHE = 'yibi-static-v28';
-const CORE = ['./', './index.html', './manifest.webmanifest', './favicon.png', './favicon.svg', './icons/icon-192.png', './icons/apple-touch-icon.png'];
+const CACHE = 'yibi-static-v29';
+const CORE = ['./', './index.html', './manifest.webmanifest', './favicon.png', './favicon.svg', './icons/icon-192.png', './icons/apple-touch-icon.png', './icons/tabs/analysis.webp', './icons/tabs/transactions.webp', './icons/tabs/assets.webp', './icons/tabs/reports.webp', './icons/tabs/data.webp'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
