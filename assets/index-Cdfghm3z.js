@@ -206,19 +206,24 @@ import{t as e}from"./vendor-supabase-BCPLnydU.js";(function(){let e=document.cre
               <span class="trip-card-emoji">${e.coverEmoji||`🏖️`}</span>
               <div class="trip-card-info">
                 <h4>
-                  ${K(e.name)}
+                  <span class="trip-card-name-text">${K(e.name)}</span>
                   ${r?`<span class="trip-badge-active">当前</span>`:``}
                   ${o?`<span class="trip-badge-done">已收官</span>`:``}
                 </h4>
-                <p>📅 ${e.startDate} ~ ${e.endDate}（${a}天） · 开销 ¥${O(i.expense)}${e.budget?` · 预算 ¥${O(e.budget)}`:``}${e.fundOpening?` · 小金库 ¥${O(e.fundOpening)}`:``}</p>
+                <p class="trip-card-meta">
+                  <span class="trip-meta-chunk">📅 ${e.startDate} ~ ${e.endDate}（${a}天）</span>
+                  <span class="trip-meta-chunk">开销 ¥${O(i.expense)}</span>
+                  ${e.budget?`<span class="trip-meta-chunk">预算 ¥${O(e.budget)}</span>`:``}
+                  ${e.fundOpening?`<span class="trip-meta-chunk">小金库 ¥${O(e.fundOpening)}</span>`:``}
+                </p>
               </div>
             </div>
             <div class="trip-card-actions">
-              <button type="button" class="btn secondary" data-action="edit-trip" data-id="${K(e.id)}" style="min-height:30px;padding:3px 10px;font-size:12px;">✏️ 编辑</button>
-              <button type="button" class="btn secondary" data-action="open-poster-from-trip" data-id="${K(e.id)}" style="min-height:30px;padding:3px 10px;font-size:12px;">📖 手账</button>
-              ${r?``:`<button type="button" class="btn secondary" data-action="set-active-trip" data-id="${K(e.id)}" style="min-height:30px;padding:3px 10px;font-size:12px;">设为当前</button>`}
-              <button type="button" class="btn secondary" data-action="toggle-trip-status" data-id="${K(e.id)}" style="min-height:30px;padding:3px 10px;font-size:12px;">${o?`重开`:`收官`}</button>
-              <button type="button" class="text-btn danger" data-action="delete-trip" data-id="${K(e.id)}" title="删除行程" style="font-size:12px;padding:4px;">删除</button>
+              <button type="button" class="btn secondary trip-action-btn" data-action="edit-trip" data-id="${K(e.id)}">✏️ 编辑</button>
+              <button type="button" class="btn secondary trip-action-btn" data-action="open-poster-from-trip" data-id="${K(e.id)}">📖 手账</button>
+              ${r?``:`<button type="button" class="btn secondary trip-action-btn" data-action="set-active-trip" data-id="${K(e.id)}">设为当前</button>`}
+              <button type="button" class="btn secondary trip-action-btn" data-action="toggle-trip-status" data-id="${K(e.id)}">${o?`重开`:`收官`}</button>
+              <button type="button" class="text-btn danger trip-delete-btn" data-action="delete-trip" data-id="${K(e.id)}" title="删除行程">删除</button>
             </div>
           </div>
         `}).join(``)}
@@ -246,24 +251,39 @@ import{t as e}from"./vendor-supabase-BCPLnydU.js";(function(){let e=document.cre
         ${q(k(`close`,20),`close-trip-form-dialog`,`icon-btn`,`type="button" aria-label="关闭"`)}
       </div>
 
-      <form id="trip-upsert-form">
-        <div class="form-grid">
-          <label class="field-label">行程名称<input name="name" value="${K(Z.name)}" placeholder="例如：五一成都吃货行 / 厦门海边行" required maxlength="60"></label>
-          <div class="field-label">旅行主题图标
-            <div class="emoji-selector-grid">
-              ${t.map(e=>`<button type="button" class="emoji-pill-btn ${e.emoji===Z.coverEmoji?`selected`:``}" data-action="select-trip-emoji" data-emoji="${K(e.emoji)}"><span class="emoji-pill-icon">${e.emoji}</span><span class="emoji-pill-text">${e.label}</span></button>`).join(``)}
-            </div>
+      <form id="trip-upsert-form" class="trip-upsert-form">
+        <label class="field-label trip-form-field">
+          <span class="trip-field-label-text">行程名称</span>
+          <input name="name" value="${K(Z.name)}" placeholder="例如：五一成都吃货行 / 厦门海边行" required maxlength="60">
+        </label>
+
+        <div class="field-label trip-form-field">
+          <span class="trip-field-label-text">旅行主题图标</span>
+          <div class="emoji-selector-grid" role="group" aria-label="旅行主题图标">
+            ${t.map(e=>`<button type="button" class="emoji-pill-btn ${e.emoji===Z.coverEmoji?`selected`:``}" data-action="select-trip-emoji" data-emoji="${K(e.emoji)}"><span class="emoji-pill-icon">${e.emoji}</span><span class="emoji-pill-text">${e.label}</span></button>`).join(``)}
           </div>
         </div>
 
-        <div class="form-grid">
-          <label class="field-label">出发日期<input type="date" name="startDate" value="${K(Z.startDate)}" required></label>
-          <label class="field-label">返回日期<input type="date" name="endDate" value="${K(Z.endDate)}" required></label>
+        <div class="trip-form-row-two">
+          <label class="field-label trip-form-field">
+            <span class="trip-field-label-text">出发日期</span>
+            <input type="date" name="startDate" value="${K(Z.startDate)}" required>
+          </label>
+          <label class="field-label trip-form-field">
+            <span class="trip-field-label-text">返回日期</span>
+            <input type="date" name="endDate" value="${K(Z.endDate)}" required>
+          </label>
         </div>
 
-        <div class="form-grid">
-          <label class="field-label">行程总预算 (可选)<input type="number" step="0.01" min="0" name="budget" value="${K(Z.budgetInput)}" placeholder="留空表示不设预算"></label>
-          <label class="field-label">共同小金库初始总额 (可选)<input type="number" step="0.01" min="0" name="fundOpening" value="${K(Z.fundOpeningInput)}" placeholder="例如双方各存2000填4000"></label>
+        <div class="trip-form-row-two">
+          <label class="field-label trip-form-field">
+            <span class="trip-field-label-text">行程总预算 <span class="optional">(可选)</span></span>
+            <input type="number" step="0.01" min="0" inputmode="decimal" name="budget" value="${K(Z.budgetInput)}" placeholder="留空表示不设预算">
+          </label>
+          <label class="field-label trip-form-field">
+            <span class="trip-field-label-text">共同小金库初始总额 <span class="optional">(可选)</span></span>
+            <input type="number" step="0.01" min="0" inputmode="decimal" name="fundOpening" value="${K(Z.fundOpeningInput)}" placeholder="例如双方各存2000填4000">
+          </label>
         </div>
 
         <div class="trip-explain-card">
@@ -277,9 +297,9 @@ import{t as e}from"./vendor-supabase-BCPLnydU.js";(function(){let e=document.cre
           </div>
         </div>
 
-        <p id="trip-form-error" class="inline-error" role="alert" style="margin:10px 0 0;"></p>
+        <p id="trip-form-error" class="inline-error" role="alert" style="margin:0;"></p>
 
-        <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:8px;">
+        <div class="trip-form-actions">
           ${q(`取消`,`close-trip-form-dialog`,`btn`,`type="button"`)}
           <button type="submit" class="btn primary">${e?`保存修改`:`创建并设为当前行程`}</button>
         </div>
